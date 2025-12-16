@@ -210,9 +210,125 @@
         }
 
         .player-profile-icon {
-            font-size: 2.5em;
-            margin-bottom: 8px;
+            width: 50px;
+            height: 55px;
+            margin: 0 auto 8px auto;
+            position: relative;
             display: block;
+        }
+
+        /* ========== PIXEL ICON CHARACTERS ========== */
+        .pixel-icon {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .pixel-icon .body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+        }
+
+        .pixel-icon.icon-alex .body {
+            box-shadow:
+                8px -52px 0 #5c4033, 9px -52px 0 #5c4033, 10px -52px 0 #5c4033, 11px -52px 0 #5c4033, 12px -52px 0 #5c4033,
+                7px -48px 0 #5c4033, 8px -48px 0 #5c4033, 9px -48px 0 #5c4033, 10px -48px 0 #5c4033, 11px -48px 0 #5c4033, 12px -48px 0 #5c4033, 13px -48px 0 #5c4033,
+                8px -44px 0 #f5d0a9, 9px -44px 0 #f5d0a9, 10px -44px 0 #f5d0a9, 11px -44px 0 #f5d0a9, 12px -44px 0 #f5d0a9,
+                8px -40px 0 #f5d0a9, 9px -40px 0 #333, 10px -40px 0 #f5d0a9, 11px -40px 0 #333, 12px -40px 0 #f5d0a9,
+                8px -36px 0 #f5d0a9, 9px -36px 0 #f5d0a9, 10px -36px 0 #f5d0a9, 11px -36px 0 #f5d0a9, 12px -36px 0 #f5d0a9,
+                6px -32px 0 var(--pixel-cyan), 7px -32px 0 var(--pixel-cyan), 8px -32px 0 #fff, 9px -32px 0 var(--pixel-cyan), 10px -32px 0 var(--pixel-cyan), 11px -32px 0 var(--pixel-cyan), 12px -32px 0 #fff, 13px -32px 0 var(--pixel-cyan), 14px -32px 0 var(--pixel-cyan),
+                6px -28px 0 var(--pixel-cyan), 7px -28px 0 var(--pixel-cyan), 8px -28px 0 var(--pixel-cyan), 9px -28px 0 var(--pixel-cyan), 10px -28px 0 var(--pixel-cyan), 11px -28px 0 var(--pixel-cyan), 12px -28px 0 var(--pixel-cyan), 13px -28px 0 var(--pixel-cyan), 14px -28px 0 var(--pixel-cyan),
+                6px -24px 0 var(--pixel-cyan), 7px -24px 0 var(--pixel-cyan), 8px -24px 0 var(--pixel-cyan), 9px -24px 0 var(--pixel-cyan), 10px -24px 0 var(--pixel-cyan), 11px -24px 0 var(--pixel-cyan), 12px -24px 0 var(--pixel-cyan), 13px -24px 0 var(--pixel-cyan), 14px -24px 0 var(--pixel-cyan),
+                7px -16px 0 #2a2a4a, 8px -16px 0 #2a2a4a, 9px -16px 0 #2a2a4a, 10px -16px 0 #2a2a4a, 11px -16px 0 #2a2a4a, 12px -16px 0 #2a2a4a, 13px -16px 0 #2a2a4a,
+                7px -12px 0 #2a2a4a, 8px -12px 0 #2a2a4a, 9px -12px 0 #2a2a4a, 10px -12px 0 #1a1a2a, 11px -12px 0 #2a2a4a, 12px -12px 0 #2a2a4a, 13px -12px 0 #2a2a4a,
+                7px -4px 0 #222, 8px -4px 0 #222, 9px -4px 0 #222, 11px -4px 0 #222, 12px -4px 0 #222, 13px -4px 0 #222;
+            transform: scale(2.5) translateX(-50%);
+        }
+
+        .pixel-icon.icon-david .body {
+            box-shadow:
+                7px -52px 0 #3a3a3a, 13px -52px 0 #3a3a3a,
+                7px -48px 0 #3a3a3a, 8px -48px 0 #3a3a3a, 12px -48px 0 #3a3a3a, 13px -48px 0 #3a3a3a,
+                8px -44px 0 #f5d0a9, 9px -44px 0 #f5d0a9, 10px -44px 0 #f5d0a9, 11px -44px 0 #f5d0a9, 12px -44px 0 #f5d0a9,
+                7px -40px 0 #333, 8px -40px 0 #66a, 9px -40px 0 #333, 10px -40px 0 #333, 11px -40px 0 #66a, 12px -40px 0 #333, 13px -40px 0 #333,
+                8px -36px 0 #f5d0a9, 9px -36px 0 #f5d0a9, 10px -36px 0 #f5d0a9, 11px -36px 0 #f5d0a9, 12px -36px 0 #f5d0a9,
+                6px -32px 0 var(--pixel-green), 7px -32px 0 var(--pixel-green), 8px -32px 0 #fff, 9px -32px 0 var(--pixel-green), 10px -32px 0 var(--pixel-green), 11px -32px 0 var(--pixel-green), 12px -32px 0 #fff, 13px -32px 0 var(--pixel-green), 14px -32px 0 var(--pixel-green),
+                6px -28px 0 var(--pixel-green), 7px -28px 0 var(--pixel-green), 8px -28px 0 var(--pixel-green), 9px -28px 0 var(--pixel-green), 10px -28px 0 var(--pixel-green), 11px -28px 0 var(--pixel-green), 12px -28px 0 var(--pixel-green), 13px -28px 0 var(--pixel-green), 14px -28px 0 var(--pixel-green),
+                6px -24px 0 var(--pixel-green), 7px -24px 0 var(--pixel-green), 8px -24px 0 var(--pixel-green), 9px -24px 0 var(--pixel-green), 10px -24px 0 var(--pixel-green), 11px -24px 0 var(--pixel-green), 12px -24px 0 var(--pixel-green), 13px -24px 0 var(--pixel-green), 14px -24px 0 var(--pixel-green),
+                7px -16px 0 #2a2a2a, 8px -16px 0 #2a2a2a, 9px -16px 0 #2a2a2a, 10px -16px 0 #2a2a2a, 11px -16px 0 #2a2a2a, 12px -16px 0 #2a2a2a, 13px -16px 0 #2a2a2a,
+                7px -12px 0 #2a2a2a, 8px -12px 0 #2a2a2a, 9px -12px 0 #2a2a2a, 10px -12px 0 #1a1a1a, 11px -12px 0 #2a2a2a, 12px -12px 0 #2a2a2a, 13px -12px 0 #2a2a2a,
+                7px -4px 0 #111, 8px -4px 0 #111, 9px -4px 0 #111, 11px -4px 0 #111, 12px -4px 0 #111, 13px -4px 0 #111;
+            transform: scale(2.5) translateX(-50%);
+        }
+
+        .pixel-icon.icon-sarah .body {
+            box-shadow:
+                7px -52px 0 #8b4513, 8px -52px 0 #8b4513, 9px -52px 0 #8b4513, 10px -52px 0 #8b4513, 11px -52px 0 #8b4513, 12px -52px 0 #8b4513, 13px -52px 0 #8b4513,
+                6px -48px 0 #8b4513, 7px -48px 0 #8b4513, 8px -48px 0 #8b4513, 9px -48px 0 #8b4513, 10px -48px 0 #8b4513, 11px -48px 0 #8b4513, 12px -48px 0 #8b4513, 13px -48px 0 #8b4513, 14px -48px 0 #8b4513,
+                8px -44px 0 #f5d0a9, 9px -44px 0 #f5d0a9, 10px -44px 0 #f5d0a9, 11px -44px 0 #f5d0a9, 12px -44px 0 #f5d0a9,
+                6px -44px 0 #8b4513, 14px -44px 0 #8b4513,
+                8px -40px 0 #f5d0a9, 9px -40px 0 #333, 10px -40px 0 #f5d0a9, 11px -40px 0 #333, 12px -40px 0 #f5d0a9,
+                6px -40px 0 #8b4513, 14px -40px 0 #8b4513,
+                8px -36px 0 #f5d0a9, 9px -36px 0 #f5d0a9, 10px -36px 0 #c66, 11px -36px 0 #f5d0a9, 12px -36px 0 #f5d0a9,
+                6px -36px 0 #8b4513, 14px -36px 0 #8b4513,
+                6px -32px 0 var(--pixel-red), 7px -32px 0 var(--pixel-red), 8px -32px 0 var(--pixel-red), 9px -32px 0 var(--pixel-red), 10px -32px 0 var(--pixel-red), 11px -32px 0 var(--pixel-red), 12px -32px 0 var(--pixel-red), 13px -32px 0 var(--pixel-red), 14px -32px 0 var(--pixel-red),
+                6px -28px 0 var(--pixel-red), 7px -28px 0 var(--pixel-red), 8px -28px 0 var(--pixel-red), 9px -28px 0 var(--pixel-red), 10px -28px 0 #fff, 11px -28px 0 var(--pixel-red), 12px -28px 0 var(--pixel-red), 13px -28px 0 var(--pixel-red), 14px -28px 0 var(--pixel-red),
+                6px -24px 0 var(--pixel-red), 7px -24px 0 var(--pixel-red), 8px -24px 0 var(--pixel-red), 9px -24px 0 var(--pixel-red), 10px -24px 0 var(--pixel-red), 11px -24px 0 var(--pixel-red), 12px -24px 0 var(--pixel-red), 13px -24px 0 var(--pixel-red), 14px -24px 0 var(--pixel-red),
+                7px -16px 0 #2a2a3a, 8px -16px 0 #2a2a3a, 9px -16px 0 #2a2a3a, 10px -16px 0 #2a2a3a, 11px -16px 0 #2a2a3a, 12px -16px 0 #2a2a3a, 13px -16px 0 #2a2a3a,
+                8px -8px 0 #f5d0a9, 9px -8px 0 #f5d0a9, 11px -8px 0 #f5d0a9, 12px -8px 0 #f5d0a9,
+                7px -4px 0 #222, 8px -4px 0 #222, 9px -4px 0 #222, 11px -4px 0 #222, 12px -4px 0 #222, 13px -4px 0 #222;
+            transform: scale(2.5) translateX(-50%);
+        }
+
+        .pixel-icon.icon-maria .body {
+            box-shadow:
+                8px -52px 0 #1a1a1a, 9px -52px 0 #1a1a1a, 10px -52px 0 #1a1a1a, 11px -52px 0 #1a1a1a, 12px -52px 0 #1a1a1a,
+                7px -48px 0 #1a1a1a, 8px -48px 0 #1a1a1a, 9px -48px 0 #1a1a1a, 10px -48px 0 #1a1a1a, 11px -48px 0 #1a1a1a, 12px -48px 0 #1a1a1a, 13px -48px 0 #1a1a1a,
+                8px -44px 0 #d4a574, 9px -44px 0 #d4a574, 10px -44px 0 #d4a574, 11px -44px 0 #d4a574, 12px -44px 0 #d4a574,
+                8px -40px 0 #d4a574, 9px -40px 0 #333, 10px -40px 0 #d4a574, 11px -40px 0 #333, 12px -40px 0 #d4a574,
+                8px -36px 0 #d4a574, 9px -36px 0 #d4a574, 10px -36px 0 #c66, 11px -36px 0 #d4a574, 12px -36px 0 #d4a574,
+                6px -32px 0 var(--pixel-orange), 7px -32px 0 var(--pixel-orange), 8px -32px 0 var(--pixel-orange), 9px -32px 0 var(--pixel-orange), 10px -32px 0 #fff, 11px -32px 0 var(--pixel-orange), 12px -32px 0 var(--pixel-orange), 13px -32px 0 var(--pixel-orange), 14px -32px 0 var(--pixel-orange),
+                6px -28px 0 var(--pixel-orange), 7px -28px 0 var(--pixel-orange), 8px -28px 0 var(--pixel-orange), 9px -28px 0 var(--pixel-orange), 10px -28px 0 var(--pixel-orange), 11px -28px 0 var(--pixel-orange), 12px -28px 0 var(--pixel-orange), 13px -28px 0 var(--pixel-orange), 14px -28px 0 var(--pixel-orange),
+                6px -24px 0 var(--pixel-orange), 7px -24px 0 var(--pixel-orange), 8px -24px 0 var(--pixel-orange), 9px -24px 0 var(--pixel-orange), 10px -24px 0 var(--pixel-orange), 11px -24px 0 var(--pixel-orange), 12px -24px 0 var(--pixel-orange), 13px -24px 0 var(--pixel-orange), 14px -24px 0 var(--pixel-orange),
+                7px -16px 0 #1a1a2a, 8px -16px 0 #1a1a2a, 9px -16px 0 #1a1a2a, 10px -16px 0 #1a1a2a, 11px -16px 0 #1a1a2a, 12px -16px 0 #1a1a2a, 13px -16px 0 #1a1a2a,
+                7px -12px 0 #1a1a2a, 8px -12px 0 #1a1a2a, 9px -12px 0 #1a1a2a, 10px -12px 0 #0a0a1a, 11px -12px 0 #1a1a2a, 12px -12px 0 #1a1a2a, 13px -12px 0 #1a1a2a,
+                7px -4px 0 #111, 8px -4px 0 #111, 9px -4px 0 #111, 11px -4px 0 #111, 12px -4px 0 #111, 13px -4px 0 #111;
+            transform: scale(2.5) translateX(-50%);
+        }
+
+        .pixel-icon.icon-tom .body {
+            box-shadow:
+                8px -52px 0 #888, 9px -52px 0 #888, 10px -52px 0 #888, 11px -52px 0 #888, 12px -52px 0 #888,
+                7px -48px 0 #888, 8px -48px 0 #888, 9px -48px 0 #888, 10px -48px 0 #888, 11px -48px 0 #888, 12px -48px 0 #888, 13px -48px 0 #888,
+                8px -44px 0 #f5d0a9, 9px -44px 0 #f5d0a9, 10px -44px 0 #f5d0a9, 11px -44px 0 #f5d0a9, 12px -44px 0 #f5d0a9,
+                8px -40px 0 #f5d0a9, 9px -40px 0 #333, 10px -40px 0 #f5d0a9, 11px -40px 0 #333, 12px -40px 0 #f5d0a9,
+                8px -36px 0 #666, 9px -36px 0 #666, 10px -36px 0 #f5d0a9, 11px -36px 0 #666, 12px -36px 0 #666,
+                6px -32px 0 var(--pixel-gray), 7px -32px 0 var(--pixel-gray), 8px -32px 0 #fff, 9px -32px 0 var(--pixel-gray), 10px -32px 0 var(--pixel-gray), 11px -32px 0 var(--pixel-gray), 12px -32px 0 #fff, 13px -32px 0 var(--pixel-gray), 14px -32px 0 var(--pixel-gray),
+                6px -28px 0 var(--pixel-gray), 7px -28px 0 var(--pixel-gray), 8px -28px 0 var(--pixel-gray), 9px -28px 0 var(--pixel-gray), 10px -28px 0 var(--pixel-gray), 11px -28px 0 var(--pixel-gray), 12px -28px 0 var(--pixel-gray), 13px -28px 0 var(--pixel-gray), 14px -28px 0 var(--pixel-gray),
+                6px -24px 0 var(--pixel-gray), 7px -24px 0 var(--pixel-gray), 8px -24px 0 var(--pixel-gray), 9px -24px 0 var(--pixel-gray), 10px -24px 0 var(--pixel-gray), 11px -24px 0 var(--pixel-gray), 12px -24px 0 var(--pixel-gray), 13px -24px 0 var(--pixel-gray), 14px -24px 0 var(--pixel-gray),
+                7px -16px 0 #3a3a3a, 8px -16px 0 #3a3a3a, 9px -16px 0 #3a3a3a, 10px -16px 0 #3a3a3a, 11px -16px 0 #3a3a3a, 12px -16px 0 #3a3a3a, 13px -16px 0 #3a3a3a,
+                7px -12px 0 #3a3a3a, 8px -12px 0 #3a3a3a, 9px -12px 0 #3a3a3a, 10px -12px 0 #2a2a2a, 11px -12px 0 #3a3a3a, 12px -12px 0 #3a3a3a, 13px -12px 0 #3a3a3a,
+                7px -4px 0 #222, 8px -4px 0 #222, 9px -4px 0 #222, 11px -4px 0 #222, 12px -4px 0 #222, 13px -4px 0 #222;
+            transform: scale(2.5) translateX(-50%);
+        }
+
+        .pixel-icon.icon-roger .body {
+            box-shadow:
+                8px -52px 0 #ccc, 9px -52px 0 #ccc, 10px -52px 0 #ccc, 11px -52px 0 #ccc, 12px -52px 0 #ccc,
+                7px -48px 0 #ccc, 8px -48px 0 #ccc, 9px -48px 0 #ccc, 10px -48px 0 #ccc, 11px -48px 0 #ccc, 12px -48px 0 #ccc, 13px -48px 0 #ccc,
+                8px -44px 0 #f5d0a9, 9px -44px 0 #f5d0a9, 10px -44px 0 #f5d0a9, 11px -44px 0 #f5d0a9, 12px -44px 0 #f5d0a9,
+                8px -40px 0 #f5d0a9, 9px -40px 0 #333, 10px -40px 0 #f5d0a9, 11px -40px 0 #333, 12px -40px 0 #f5d0a9,
+                8px -36px 0 #f5d0a9, 9px -36px 0 #f5d0a9, 10px -36px 0 #f5d0a9, 11px -36px 0 #f5d0a9, 12px -36px 0 #f5d0a9,
+                6px -32px 0 #2a2a3a, 7px -32px 0 #2a2a3a, 8px -32px 0 #fff, 9px -32px 0 #2a2a3a, 10px -32px 0 var(--pixel-gold), 11px -32px 0 #2a2a3a, 12px -32px 0 #fff, 13px -32px 0 #2a2a3a, 14px -32px 0 #2a2a3a,
+                6px -28px 0 #2a2a3a, 7px -28px 0 #2a2a3a, 8px -28px 0 #2a2a3a, 9px -28px 0 #2a2a3a, 10px -28px 0 var(--pixel-gold), 11px -28px 0 #2a2a3a, 12px -28px 0 #2a2a3a, 13px -28px 0 #2a2a3a, 14px -28px 0 #2a2a3a,
+                6px -24px 0 #2a2a3a, 7px -24px 0 #2a2a3a, 8px -24px 0 #2a2a3a, 9px -24px 0 #2a2a3a, 10px -24px 0 var(--pixel-gold), 11px -24px 0 #2a2a3a, 12px -24px 0 #2a2a3a, 13px -24px 0 #2a2a3a, 14px -24px 0 #2a2a3a,
+                7px -16px 0 #1a1a2a, 8px -16px 0 #1a1a2a, 9px -16px 0 #1a1a2a, 10px -16px 0 #1a1a2a, 11px -16px 0 #1a1a2a, 12px -16px 0 #1a1a2a, 13px -16px 0 #1a1a2a,
+                7px -12px 0 #1a1a2a, 8px -12px 0 #1a1a2a, 9px -12px 0 #1a1a2a, 10px -12px 0 #0a0a1a, 11px -12px 0 #1a1a2a, 12px -12px 0 #1a1a2a, 13px -12px 0 #1a1a2a,
+                7px -4px 0 #111, 8px -4px 0 #111, 9px -4px 0 #111, 11px -4px 0 #111, 12px -4px 0 #111, 13px -4px 0 #111;
+            transform: scale(2.5) translateX(-50%);
         }
 
         .player-profile-name {
@@ -299,8 +415,14 @@
         }
 
         .player-modal-icon {
-            font-size: 3em;
-            margin-bottom: 12px;
+            width: 60px;
+            height: 65px;
+            margin: 0 auto 12px auto;
+            position: relative;
+        }
+
+        .player-modal-icon .pixel-icon .body {
+            transform: scale(3) translateX(-50%);
         }
 
         .player-modal-name {
@@ -465,17 +587,16 @@
         }
 
         .character-icon {
-            font-size: 2em;
-            margin-bottom: 4px;
+            width: 40px;
+            height: 45px;
+            margin: 0 auto 4px auto;
+            position: relative;
             display: block;
         }
 
-        .character.alex .character-icon { color: var(--pixel-cyan); }
-        .character.david .character-icon { color: var(--pixel-green); }
-        .character.sarah .character-icon { color: var(--pixel-red); }
-        .character.maria .character-icon { color: var(--pixel-orange); }
-        .character.tom .character-icon { color: var(--pixel-gray); }
-        .character.roger .character-icon { color: var(--pixel-gold); }
+        .character-icon .pixel-icon .body {
+            transform: scale(2) translateX(-50%);
+        }
 
         .character-name {
             font-family: 'Press Start 2P', cursive;
@@ -925,7 +1046,7 @@
             <div class="players-container">
                 <!-- Alex -->
                 <div class="player-profile alex" onclick="showPlayerDetail('alex')">
-                    <span class="player-profile-icon">💡</span>
+                    <div class="player-profile-icon"><div class="pixel-icon icon-alex"><div class="body"></div></div></div>
                     <div class="player-profile-name">Alex</div>
                     <div class="player-profile-title">VP Innovation</div>
                     <div class="player-profile-hint">(You)</div>
@@ -933,7 +1054,7 @@
 
                 <!-- David -->
                 <div class="player-profile david" onclick="showPlayerDetail('david')">
-                    <span class="player-profile-icon">💰</span>
+                    <div class="player-profile-icon"><div class="pixel-icon icon-david"><div class="body"></div></div></div>
                     <div class="player-profile-name">David</div>
                     <div class="player-profile-title">VP Finance</div>
                     <div class="player-profile-hint">Click to learn more</div>
@@ -941,7 +1062,7 @@
 
                 <!-- Sarah -->
                 <div class="player-profile sarah" onclick="showPlayerDetail('sarah')">
-                    <span class="player-profile-icon">📊</span>
+                    <div class="player-profile-icon"><div class="pixel-icon icon-sarah"><div class="body"></div></div></div>
                     <div class="player-profile-name">Sarah</div>
                     <div class="player-profile-title">VP Marketing</div>
                     <div class="player-profile-hint">Click to learn more</div>
@@ -949,7 +1070,7 @@
 
                 <!-- Maria -->
                 <div class="player-profile maria" onclick="showPlayerDetail('maria')">
-                    <span class="player-profile-icon">🎯</span>
+                    <div class="player-profile-icon"><div class="pixel-icon icon-maria"><div class="body"></div></div></div>
                     <div class="player-profile-name">Maria</div>
                     <div class="player-profile-title">VP Sales</div>
                     <div class="player-profile-hint">Click to learn more</div>
@@ -957,7 +1078,7 @@
 
                 <!-- Tom -->
                 <div class="player-profile tom" onclick="showPlayerDetail('tom')">
-                    <span class="player-profile-icon">🏭</span>
+                    <div class="player-profile-icon"><div class="pixel-icon icon-tom"><div class="body"></div></div></div>
                     <div class="player-profile-name">Tom</div>
                     <div class="player-profile-title">VP Production</div>
                     <div class="player-profile-hint">Click to learn more</div>
@@ -965,7 +1086,7 @@
 
                 <!-- Roger -->
                 <div class="player-profile roger" onclick="showPlayerDetail('roger')">
-                    <span class="player-profile-icon">👔</span>
+                    <div class="player-profile-icon"><div class="pixel-icon icon-roger"><div class="body"></div></div></div>
                     <div class="player-profile-name">Roger</div>
                     <div class="player-profile-title">CEO</div>
                     <div class="player-profile-hint">Click to learn more</div>
@@ -1024,37 +1145,37 @@
             <!-- Characters -->
             <div id="characters">
                 <div class="character alex active" data-character="alex">
-                    <span class="character-icon">💡</span>
+                    <div class="character-icon"><div class="pixel-icon icon-alex"><div class="body"></div></div></div>
                     <div class="character-name">Alex Chen</div>
                     <div class="character-title">VP Innovation</div>
                     <div class="character-emotion" id="alex-emotion"></div>
                 </div>
                 <div class="character david" data-character="david">
-                    <span class="character-icon">💰</span>
+                    <div class="character-icon"><div class="pixel-icon icon-david"><div class="body"></div></div></div>
                     <div class="character-name">David</div>
                     <div class="character-title">VP Finance</div>
                     <div class="character-emotion" id="david-emotion"></div>
                 </div>
                 <div class="character sarah" data-character="sarah">
-                    <span class="character-icon">📊</span>
+                    <div class="character-icon"><div class="pixel-icon icon-sarah"><div class="body"></div></div></div>
                     <div class="character-name">Sarah</div>
                     <div class="character-title">VP Marketing</div>
                     <div class="character-emotion" id="sarah-emotion"></div>
                 </div>
                 <div class="character maria" data-character="maria">
-                    <span class="character-icon">🎯</span>
+                    <div class="character-icon"><div class="pixel-icon icon-maria"><div class="body"></div></div></div>
                     <div class="character-name">Maria</div>
                     <div class="character-title">VP Sales</div>
                     <div class="character-emotion" id="maria-emotion"></div>
                 </div>
                 <div class="character tom" data-character="tom">
-                    <span class="character-icon">🏭</span>
+                    <div class="character-icon"><div class="pixel-icon icon-tom"><div class="body"></div></div></div>
                     <div class="character-name">Tom</div>
                     <div class="character-title">VP Production</div>
                     <div class="character-emotion" id="tom-emotion"></div>
                 </div>
                 <div class="character roger" data-character="roger">
-                    <span class="character-icon">👔</span>
+                    <div class="character-icon"><div class="pixel-icon icon-roger"><div class="body"></div></div></div>
                     <div class="character-name">Roger</div>
                     <div class="character-title">CEO</div>
                     <div class="character-emotion" id="roger-emotion"></div>
@@ -1242,11 +1363,11 @@
         function showPlayerDetail(playerName) {
             const profile = characterProfiles[playerName];
             const char = characters[playerName];
-            
+
             const modalBody = document.getElementById('player-modal-body');
             modalBody.innerHTML = `
                 <div class="player-modal-header">
-                    <div class="player-modal-icon">${char.icon}</div>
+                    <div class="player-modal-icon"><div class="pixel-icon icon-${playerName}"><div class="body"></div></div></div>
                     <div class="player-modal-name">${char.name}</div>
                     <div class="player-modal-title">${char.title}</div>
                 </div>
