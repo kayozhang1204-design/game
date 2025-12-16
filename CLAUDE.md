@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Single-file interactive narrative game: "Snapple Boardroom Survival - A Leadership Game". Built entirely with vanilla HTML, CSS, and JavaScript in one self-contained HTML file (~110KB).
+Single-file interactive narrative game: "Boardroom Survival - A Leadership Game". A brandless corporate leadership simulation set at a beverage company post-acquisition. Built entirely with vanilla HTML, CSS, and JavaScript in one self-contained HTML file.
 
 ## Running the Game
 
