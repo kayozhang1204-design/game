@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapple Boardroom Survival - Leadership Game</title>
+    <style>
+        /* ========== GLOBAL STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ========== GAME CONTAINER ========== */
+        #game-container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(26, 35, 50, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ========== TITLE SCREEN ========== */
+        #title-screen {
+            text-align: center;
+        }
+
+        #title-screen h1 {
+            font-size: 3em;
+            color: #f1c40f;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        #title-screen .subtitle {
+            font-size: 1.3em;
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+
+        #title-screen .story-intro {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        #title-screen .story-intro h3 {
+            color: #f1c40f;
+            margin-bottom: 15px;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+            color: #1a2332;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(241, 196, 15, 0.4);
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.6);
+        }
+
+        /* ========== MEET THE PLAYERS SCREEN ========== */
+        #meet-players-screen {
+            text-align: center;
+        }
+
+        #meet-players-screen h2 {
+            font-size: 2.5em;
+            color: #f1c40f;
+            margin-bottom: 20px;
+        }
+
+        #meet-players-screen .instruction {
+            font-size: 1.2em;
+            color: #3498db;
+            margin-bottom: 40px;
+        }
+
+        .players-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            gap: 20px;
+        }
+
+        .player-profile {
+            text-align: center;
+            margin: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .player-profile:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .player-profile.viewed {
+            opacity: 1;
+        }
+
+        .player-profile-icon {
+            font-size: 4em;
+            margin-bottom: 10px;
+            display: block;
+            padding: 15px;
+            border-radius: 50%;
+            border: 4px solid;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .player-profile:hover .player-profile-icon {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        .player-profile.alex .player-profile-icon { 
+            border-color: #3498db; 
+            color: #3498db;
+        }
+        .player-profile.david .player-profile-icon { 
+            border-color: #27ae60; 
+            color: #27ae60;
+        }
+        .player-profile.sarah .player-profile-icon { 
+            border-color: #e74c3c; 
+            color: #e74c3c;
+        }
+        .player-profile.maria .player-profile-icon { 
+            border-color: #f39c12; 
+            color: #f39c12;
+        }
+        .player-profile.tom .player-profile-icon { 
+            border-color: #95a5a6; 
+            color: #95a5a6;
+        }
+        .player-profile.roger .player-profile-icon { 
+            border-color: #f1c40f; 
+            color: #f1c40f;
+        }
+
+        .player-profile-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .player-profile-title {
+            font-size: 0.9em;
+            color: #95a5a6;
+            margin-bottom: 10px;
+        }
+
+        .player-profile-hint {
+            font-size: 0.85em;
+            color: #3498db;
+            font-style: italic;
+        }
+
+        /* Player Detail Modal */
+        .player-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .player-modal.active {
+            display: flex;
+        }
+
+        .player-modal-content {
+            background: linear-gradient(135deg, #1a2332 0%, #2d3e50 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            border: 4px solid;
+        }
+
+        .player-modal-content.alex { border-color: #3498db; }
+        .player-modal-content.david { border-color: #27ae60; }
+        .player-modal-content.sarah { border-color: #e74c3c; }
+        .player-modal-content.maria { border-color: #f39c12; }
+        .player-modal-content.tom { border-color: #95a5a6; }
+        .player-modal-content.roger { border-color: #f1c40f; }
+
+        .player-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #95a5a6;
+            background: none;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .player-modal-close:hover {
+            color: #e74c3c;
+            transform: scale(1.2);
+        }
+
+        .player-modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .player-modal-icon {
+            font-size: 5em;
+            margin-bottom: 15px;
+        }
+
+        .player-modal-name {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .player-modal-title {
+            font-size: 1.2em;
+            color: #bdc3c7;
+        }
+
+        .player-modal-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+
+        .player-modal-section.alex { border-color: #3498db; }
+        .player-modal-section.david { border-color: #27ae60; }
+        .player-modal-section.sarah { border-color: #e74c3c; }
+        .player-modal-section.maria { border-color: #f39c12; }
+        .player-modal-section.tom { border-color: #95a5a6; }
+        .player-modal-section.roger { border-color: #f1c40f; }
+
+        .player-modal-section h4 {
+            color: #f1c40f;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .player-modal-section p {
+            line-height: 1.6;
+            color: #ecf0f1;
+        }
+
+        .continue-to-game-button {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        }
+
+        .continue-to-game-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+        }
+
+        /* ========== SCORE BAR ========== */
+        #score-bar {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .score-item {
+            margin: 10px 0;
+        }
+
+        .score-label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+
+        .score-bar-fill {
+            display: inline-block;
+            width: 200px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+
+        .score-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db 0%, #2ecc71 100%);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .allies-list {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        /* ========== DIALOGUE BOX ========== */
+        #dialogue-box {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a2332;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            min-height: 120px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .speaker-name {
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .dialogue-text {
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        .dialogue-emotion {
+            margin-top: 10px;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+
+        /* ========== CHARACTERS ========== */
+        #characters {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            display: none;
+        }
+
+        .character {
+            text-align: center;
+            margin: 10px;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .character.active {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .character.speaking {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 10px currentColor);
+            }
+            to {
+                filter: drop-shadow(0 0 20px currentColor);
+            }
+        }
+
+        .character-icon {
+            font-size: 4em;
+            margin-bottom: 10px;
+            display: block;
+            padding: 15px;
+            border-radius: 50%;
+            border: 4px solid;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .character.alex .character-icon { 
+            border-color: #3498db; 
+            color: #3498db;
+        }
+        .character.david .character-icon { 
+            border-color: #27ae60; 
+            color: #27ae60;
+        }
+        .character.sarah .character-icon { 
+            border-color: #e74c3c; 
+            color: #e74c3c;
+        }
+        .character.maria .character-icon { 
+            border-color: #f39c12; 
+            color: #f39c12;
+        }
+        .character.tom .character-icon { 
+            border-color: #95a5a6; 
+            color: #95a5a6;
+        }
+        .character.roger .character-icon { 
+            border-color: #f1c40f; 
+            color: #f1c40f;
+        }
+
+        .character-name {
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .character-title {
+            font-size: 0.85em;
+            color: #95a5a6;
+            margin-top: 5px;
+        }
+
+        .character-emotion {
+            font-size: 1.5em;
+            margin-top: 5px;
+            height: 30px;
+        }
+
+        /* ========== CHOICES ========== */
+        #choices {
+            display: none;
+        }
+
+        .choice-button {
+            background: rgba(52, 152, 219, 0.2);
+            border: 2px solid #3498db;
+            color: #ffffff;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1em;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice-button:hover {
+            background: rgba(52, 152, 219, 0.4);
+            transform: translateX(10px);
+            border-color: #2ecc71;
+        }
+
+        .choice-button:active {
+            background: rgba(46, 204, 113, 0.3);
+        }
+
+        .choice-label {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .choice-description {
+            font-size: 0.9em;
+            color: #bdc3c7;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* ========== CONTINUE BUTTON ========== */
+        #continue-button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            margin: 20px auto;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        #continue-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+        }
+
+        /* ========== ENDING SCREEN ========== */
+        #ending-screen {
+            text-align: center;
+            display: none;
+        }
+
+        .ending-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #f1c40f;
+        }
+
+        .ending-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        .what-happened-next {
+            background: rgba(52, 152, 219, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            line-height: 1.7;
+            text-align: left;
+            border-left: 5px solid #3498db;
+        }
+
+        .leadership-tips {
+            background: rgba(46, 204, 113, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: left;
+            border-left: 5px solid #2ecc71;
+        }
+
+        .leadership-tips h3 {
+            color: #2ecc71;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .leadership-tip {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #2ecc71;
+        }
+
+        .leadership-tip-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .leadership-tip-icon {
+            font-size: 2em;
+            margin-right: 15px;
+        }
+
+        .leadership-tip-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+
+        .leadership-tip-course {
+            color: #ecf0f1;
+            line-height: 1.6;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        .course-connection {
+            background: rgba(241, 196, 15, 0.15);
+            padding: 20px;
+            border-left: 4px solid #f1c40f;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .course-connection h4 {
+            color: #f1c40f;
+            margin-bottom: 10px;
+        }
+
+        .final-scores {
+            background: rgba(46, 204, 113, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .restart-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            #title-screen h1 {
+                font-size: 2em;
+            }
+            
+            .character {
+                margin: 5px;
+            }
+            
+            .character-icon {
+                font-size: 3em;
+                padding: 10px;
+            }
+            
+            .score-bar-fill {
+                width: 150px;
+            }
+        }
+
+        /* ========== UTILITY ========== */
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <!-- TITLE SCREEN -->
+        <div id="title-screen">
+            <h1>🏢 SNAPPLE BOARDROOM SURVIVAL</h1>
+            <div class="subtitle">A Leadership & Influence Game</div>
+            
+            <div class="story-intro">
+                <h3>📋 Your Mission</h3>
+                <p><strong>You are Alex</strong>, newly appointed <strong>VP of Innovation</strong> at Snapple.</p>
+                <p style="margin-top: 15px;">Quaker Oats just acquired Snapple for <strong>$1.7 billion</strong>, but shareholders are furious—they think the price was too high. Snapple's profits have dropped 70%, and the pressure is intense.</p>
+                <p style="margin-top: 15px;">CEO Roger has called an emergency board meeting. Every VP must present a strategy to turn things around. Your proposal: launch a <strong>Snapple Sports Drink</strong> to dominate the "New Age Drink Market."</p>
+                <p style="margin-top: 15px; color: #f39c12;"><strong>But here's the catch:</strong> You need to navigate boardroom politics, build alliances, and convince other VPs to support your vision. One wrong move and you could be fired.</p>
+                <p style="margin-top: 15px; color: #2ecc71;">Can you survive and become a leader? Or will you be the next casualty?</p>
+            </div>
+
+            <button class="start-button" onclick="showMeetPlayers()">MEET THE PLAYERS 👥</button>
+        </div>
+
+        <!-- MEET THE PLAYERS SCREEN -->
+        <div id="meet-players-screen" class="hidden">
+            <h2>🎭 Meet The Players</h2>
+            <p class="instruction">Click on each character to learn about them</p>
+            
+            <div class="players-container">
+                <!-- Alex -->
+                <div class="player-profile alex" onclick="showPlayerDetail('alex')">
+                    <span class="player-profile-icon">💡</span>
+                    <div class="player-profile-name">Alex</div>
+                    <div class="player-profile-title">VP Innovation</div>
+                    <div class="player-profile-hint">(You)</div>
+                </div>
+
+                <!-- David -->
+                <div class="player-profile david" onclick="showPlayerDetail('david')">
+                    <span class="player-profile-icon">💰</span>
+                    <div class="player-profile-name">David</div>
+                    <div class="player-profile-title">VP Finance</div>
+                    <div class="player-profile-hint">Click to learn more</div>
+                </div>
+
+                <!-- Sarah -->
+                <div class="player-profile sarah" onclick="showPlayerDetail('sarah')">
+                    <span class="player-profile-icon">📊</span>
+                    <div class="player-profile-name">Sarah</div>
+                    <div class="player-profile-title">VP Marketing</div>
+                    <div class="player-profile-hint">Click to learn more</div>
+                </div>
+
+                <!-- Maria -->
+                <div class="player-profile maria" onclick="showPlayerDetail('maria')">
+                    <span class="player-profile-icon">🎯</span>
+                    <div class="player-profile-name">Maria</div>
+                    <div class="player-profile-title">VP Sales</div>
+                    <div class="player-profile-hint">Click to learn more</div>
+                </div>
+
+                <!-- Tom -->
+                <div class="player-profile tom" onclick="showPlayerDetail('tom')">
+                    <span class="player-profile-icon">🏭</span>
+                    <div class="player-profile-name">Tom</div>
+                    <div class="player-profile-title">VP Production</div>
+                    <div class="player-profile-hint">Click to learn more</div>
+                </div>
+
+                <!-- Roger -->
+                <div class="player-profile roger" onclick="showPlayerDetail('roger')">
+                    <span class="player-profile-icon">👔</span>
+                    <div class="player-profile-name">Roger</div>
+                    <div class="player-profile-title">CEO</div>
+                    <div class="player-profile-hint">Click to learn more</div>
+                </div>
+            </div>
+
+            <button class="continue-to-game-button" onclick="startGame()">START THE GAME 🚀</button>
+        </div>
+
+        <!-- Player Detail Modal -->
+        <div id="player-modal" class="player-modal">
+            <div id="player-modal-content" class="player-modal-content">
+                <button class="player-modal-close" onclick="closePlayerDetail()">✕</button>
+                <div id="player-modal-body"></div>
+            </div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="game-screen" class="hidden">
+            <!-- Score Bar -->
+            <div id="score-bar">
+                <div class="score-item">
+                    <span class="score-label">📊 Credibility:</span>
+                    <div class="score-bar-fill">
+                        <div id="credibility-bar" class="score-bar-inner" style="width: 50%;"></div>
+                    </div>
+                    <span id="credibility-value">50/100</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">🤝 Allies:</span>
+                    <span id="allies-list" class="allies-list">None yet</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">⚡ Political Savvy:</span>
+                    <div class="score-bar-fill">
+                        <div id="savvy-bar" class="score-bar-inner" style="width: 50%;"></div>
+                    </div>
+                    <span id="savvy-value">50/100</span>
+                </div>
+            </div>
+
+            <!-- Dialogue Box -->
+            <div id="dialogue-box">
+                <div class="speaker-name" id="speaker-name"></div>
+                <div class="dialogue-text" id="dialogue-text"></div>
+                <div class="dialogue-emotion" id="dialogue-emotion"></div>
+            </div>
+
+            <!-- Characters -->
+            <div id="characters">
+                <div class="character alex active" data-character="alex">
+                    <span class="character-icon">💡</span>
+                    <div class="character-name">Alex Chen</div>
+                    <div class="character-title">VP Innovation</div>
+                    <div class="character-emotion" id="alex-emotion"></div>
+                </div>
+                <div class="character david" data-character="david">
+                    <span class="character-icon">💰</span>
+                    <div class="character-name">David</div>
+                    <div class="character-title">VP Finance</div>
+                    <div class="character-emotion" id="david-emotion"></div>
+                </div>
+                <div class="character sarah" data-character="sarah">
+                    <span class="character-icon">📊</span>
+                    <div class="character-name">Sarah</div>
+                    <div class="character-title">VP Marketing</div>
+                    <div class="character-emotion" id="sarah-emotion"></div>
+                </div>
+                <div class="character maria" data-character="maria">
+                    <span class="character-icon">🎯</span>
+                    <div class="character-name">Maria</div>
+                    <div class="character-title">VP Sales</div>
+                    <div class="character-emotion" id="maria-emotion"></div>
+                </div>
+                <div class="character tom" data-character="tom">
+                    <span class="character-icon">🏭</span>
+                    <div class="character-name">Tom</div>
+                    <div class="character-title">VP Production</div>
+                    <div class="character-emotion" id="tom-emotion"></div>
+                </div>
+                <div class="character roger" data-character="roger">
+                    <span class="character-icon">👔</span>
+                    <div class="character-name">Roger</div>
+                    <div class="character-title">CEO</div>
+                    <div class="character-emotion" id="roger-emotion"></div>
+                </div>
+            </div>
+
+            <!-- Choices -->
+            <div id="choices"></div>
+
+            <!-- Continue Button -->
+            <button id="continue-button" onclick="continueStory()">Continue →</button>
+        </div>
+
+        <!-- ENDING SCREEN -->
+        <div id="ending-screen" class="hidden">
+            <h2 class="ending-title" id="ending-title"></h2>
+            <div class="ending-content" id="ending-content"></div>
+            <div class="what-happened-next" id="what-happened-next"></div>
+            <div class="leadership-tips" id="leadership-tips"></div>
+            <div class="course-connection" id="course-connection"></div>
+            <div class="final-scores" id="final-scores"></div>
+            <button class="restart-button" onclick="location.reload()">Play Again 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        // ========== GAME STATE ==========
+        let gameState = {
+            currentScene: 0,
+            credibility: 50,
+            politicalSavvy: 50,
+            allies: [],
+            choices: {},
+            characterEmotions: {
+                alex: '',
+                david: '😐',
+                sarah: '😐',
+                maria: '😐',
+                tom: '😐',
+                roger: '😐'
+            }
+        };
+
+        // ========== CHARACTER DATA ==========
+        const characters = {
+            alex: { name: "Alex", title: "VP Innovation", icon: "💡" },
+            david: { name: "David", title: "VP Finance", icon: "💰" },
+            sarah: { name: "Sarah", title: "VP Marketing", icon: "📊" },
+            maria: { name: "Maria", title: "VP Sales", icon: "🎯" },
+            tom: { name: "Tom", title: "VP Production", icon: "🏭" },
+            roger: { name: "Roger", title: "CEO", icon: "👔" }
+        };
+
+        // ========== CHARACTER PROFILES ==========
+        const characterProfiles = {
+            alex: {
+                background: "You were just promoted to VP of Innovation 3 months ago. Fresh MBA from NYU Stern. You came from management consulting and have a reputation for analytical thinking and bold ideas. This is your first executive-level position.",
+                personality: "Ambitious, strategic, confident. You believe in data-driven decision making but also trust your instincts. You're still learning how to navigate corporate politics at this level.",
+                motivation: "You want to prove yourself. This Sports Drink proposal is your chance to make your mark and show that Quaker made the right choice in acquiring Snapple. You need allies to make it happen.",
+                strengths: "Strategic thinking, presentation skills, innovation mindset",
+                weaknesses: "Limited political capital, new to the executive team, unproven track record at Snapple",
+                whatTheyWant: "Launch the Sports Drink successfully and establish yourself as a key leader"
+            },
+            david: {
+                background: "15 years at Quaker Oats before the acquisition. CPA with an MBA from Wharton. Known as 'the numbers guy.' Deeply skeptical of risky investments. Has Roger's ear on financial matters.",
+                personality: "Conservative, risk-averse, analytical. Doesn't trust 'vision' without hard data. Tends to say 'no' first and 'maybe' later. Respected but not always liked.",
+                motivation: "Protect Quaker's investment. The $1.7B acquisition already looks expensive—he doesn\'t want to make it worse. He's under pressure from Quaker's board to control costs.",
+                strengths: "Financial expertise, relationship with CEO, credibility with board",
+                weaknesses: "Seen as too cautious, resists innovation, can be inflexible",
+                whatTheyWant: "Cut costs by 20% across all departments and prove financial discipline"
+            },
+            sarah: {
+                background: "Former VP of Marketing at Gemini (the company Snapple acquired). Nervous about her job security. She's creative and talented but feels like an outsider in the new organization.",
+                personality: "Creative, insecure, people-pleasing. Wants to be liked. Tends to agree with whoever spoke last in meetings. Skilled marketer but not politically savvy.",
+                motivation: "Keep her job. Prove she deserves to be here. She thinks a big, flashy marketing campaign will make her indispensable. But she's afraid to take strong positions.",
+                strengths: "Marketing expertise, creative ideas, good relationship with ad agencies",
+                weaknesses: "Lacks confidence, politically weak, afraid of conflict",
+                whatTheyWant: "Launch a celebrity endorsement campaign and secure her position"
+            },
+            maria: {
+                background: "Sales veteran. 20 years in beverage industry. Worked her way up from regional sales rep. Practical, street-smart, results-oriented. Doesn't have an MBA and is proud of it.",
+                personality: "Aggressive, competitive, impatient with 'corporate BS.' Believes in her gut and her relationships with distributors. Can be abrasive but gets results.",
+                motivation: "Hit her sales targets. The acquisition chaos has hurt sales—she needs a quick win. She thinks lower prices will boost volume fast. Doesn't care about 'brand positioning.'",
+                strengths: "Deep distributor relationships, sales expertise, practical mindset",
+                weaknesses: "Short-term focus, dismissive of others' ideas, can be combative",
+                whatTheyWant: "Cut prices by 15% and flood the market with volume"
+            },
+            tom: {
+                background: "30 years in beverage production. Started as a plant manager, now oversees all manufacturing. Engineering degree. Quiet, competent, respected by everyone. The 'adult in the room.'",
+                personality: "Pragmatic, detail-oriented, calm. Asks good questions. Doesn't play politics but commands respect. Values quality and efficiency. Protective of his production team.",
+                motivation: "Keep production running smoothly. He's tired of executives making promises without understanding operational constraints. He wants decisions that are actually executable.",
+                strengths: "Technical expertise, respect from all VPs, operational credibility",
+                weaknesses: "Doesn't self-promote, can be too cautious about change",
+                whatTheyWant: "Maintain quality standards and protect his team from unrealistic demands"
+            },
+            roger: {
+                background: "New CEO (6 months). Former Gemini CEO who became Snapple CEO after the acquisition. MBA from Harvard. Under intense pressure from Quaker's board and shareholders. His job is at risk.",
+                personality: "Professional, strategic, but insecure. Trying to look decisive while actually unsure. Wants to make the 'right' decision but doesn\'t know what that is. Watching everyone carefully.",
+                motivation: "Survive. He needs to turn Snapple around in 12 months or he's out. He's looking for someone to rally behind—a VP who can unite the team and deliver results. He's testing everyone.",
+                strengths: "Positional authority, strategic thinking, board relationships",
+                weaknesses: "Job insecurity, doesn\'t know who to trust, indecisive",
+                whatTheyWant: "Find a strategy that works and a leader he can trust to execute it"
+            }
+        };
+
+        // ========== MEET PLAYERS FUNCTIONS ==========
+        function showMeetPlayers() {
+            document.getElementById('title-screen').classList.add('hidden');
+            document.getElementById('meet-players-screen').classList.add('hidden');
+            document.getElementById('meet-players-screen').classList.remove('hidden');
+        }
+
+        function showPlayerDetail(playerName) {
+            const profile = characterProfiles[playerName];
+            const char = characters[playerName];
+            
+            const modalBody = document.getElementById('player-modal-body');
+            modalBody.innerHTML = `
+                <div class="player-modal-header">
+                    <div class="player-modal-icon">${char.icon}</div>
+                    <div class="player-modal-name">${char.name}</div>
+                    <div class="player-modal-title">${char.title}</div>
+                </div>
+                
+                <div class="player-modal-section ${playerName}">
+                    <h4>📋 Background</h4>
+                    <p>${profile.background}</p>
+                </div>
+                
+                <div class="player-modal-section ${playerName}">
+                    <h4>🎭 Personality</h4>
+                    <p>${profile.personality}</p>
+                </div>
+                
+                <div class="player-modal-section ${playerName}">
+                    <h4>🎯 Motivation</h4>
+                    <p>${profile.motivation}</p>
+                </div>
+                
+                <div class="player-modal-section ${playerName}">
+                    <h4>💪 Strengths</h4>
+                    <p>${profile.strengths}</p>
+                </div>
+                
+                <div class="player-modal-section ${playerName}">
+                    <h4>⚠️ Weaknesses</h4>
+                    <p>${profile.weaknesses}</p>
+                </div>
+                
+                <div class="player-modal-section ${playerName}">
+                    <h4>🎁 What They Want</h4>
+                    <p>${profile.whatTheyWant}</p>
+                </div>
+            `;
+            
+            const modalContent = document.getElementById('player-modal-content');
+            modalContent.className = 'player-modal-content ' + playerName;
+            
+            document.getElementById('player-modal').classList.add('active');
+            
+            // Mark profile as viewed
+            document.querySelector(`.player-profile.${playerName}`).classList.add('viewed');
+        }
+
+        function closePlayerDetail() {
+            document.getElementById('player-modal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('player-modal');
+            if (event.target === modal) {
+                closePlayerDetail();
+            }
+        });
+
+        // ========== STORY SCENES ==========
+        const scenes = [
+            // Scene 0: Pre-meeting hallway
+            {
+                speaker: "narrator",
+                text: "You're in the hallway outside the boardroom. In 5 minutes, you'll present your Sports Drink proposal to the executive team. Your heart is racing.",
+                emotion: "",
+                choices: [
+                    {
+                        label: "A) 🤝 Approach Sarah (VP Marketing)",
+                        text: "Ask Sarah: 'What are you planning to propose today?'",
+                        description: "Try to gather information",
+                        next: 1,
+                        effects: { credibility: 0, politicalSavvy: 5 }
+                    },
+                    {
+                        label: "B) 🎯 Approach Sarah strategically",
+                        text: "Say to Sarah: 'I think we should join forces in the meeting.'",
+                        description: "Attempt to build an early alliance",
+                        next: 2,
+                        effects: { credibility: 5, politicalSavvy: 5 }
+                    },
+                    {
+                        label: "C) 😎 Stay neutral",
+                        text: "Just smile and nod politely, then enter the boardroom",
+                        description: "Play it safe, observe first",
+                        next: 3,
+                        effects: { credibility: 0, politicalSavvy: 0 }
+                    }
+                ]
+            },
+
+            // Scene 1: Sarah responds - Information gathering
+            {
+                speaker: "sarah",
+                text: "Oh, hi Alex. I'm... not sure yet. Roger wants aggressive ideas. I'm thinking about celebrity athlete endorsements for our existing teas. What about you?",
+                emotion: "😰 Sarah looks nervous",
+                setEmotion: { sarah: "😰" },
+                choices: [
+                    {
+                        label: "A) Share your full plan",
+                        text: "I'm proposing a new Sports Drink line. Want to coordinate?",
+                        description: "Be transparent and collaborative",
+                        next: 4,
+                        effects: { credibility: 5, politicalSavvy: 5 },
+                        addAlly: "sarah"
+                    },
+                    {
+                        label: "B) Stay vague",
+                        text: "I'm still working out the details. Let's see how the meeting goes.",
+                        description: "Keep your cards close",
+                        next: 5,
+                        effects: { credibility: -5, politicalSavvy: 5 }
+                    }
+                ]
+            },
+
+            // Scene 2: Sarah responds - Alliance attempt
+            {
+                speaker: "sarah",
+                text: "Join forces? I... I guess that depends on what you're proposing. I'm thinking celebrity endorsements. What's your idea?",
+                emotion: "🤔 Sarah is intrigued but cautious",
+                setEmotion: { sarah: "🤔" },
+                choices: [
+                    {
+                        label: "A) Pitch synergy",
+                        text: "I'm launching a Sports Drink. Your endorsements + my product = perfect combo!",
+                        description: "Show how you can work together",
+                        next: 4,
+                        effects: { credibility: 10, politicalSavvy: 10 },
+                        addAlly: "sarah"
+                    },
+                    {
+                        label: "B) Disagree politely",
+                        text: "Actually, I think we need a new product, not just marketing. Let's discuss inside.",
+                        description: "Be honest about your difference",
+                        next: 5,
+                        effects: { credibility: 5, politicalSavvy: 0 }
+                    }
+                ]
+            },
+
+            // Scene 3: Neutral entry
+            {
+                speaker: "narrator",
+                text: "You walk into the boardroom. Everyone is already seated. Roger sits at the head of the table, looking stern. The tension is palpable.",
+                emotion: "",
+                next: 6
+            },
+
+            // Scene 4: Sarah becomes ally
+            {
+                speaker: "sarah",
+                text: "That... actually makes sense. Celebrity athletes promoting a sports drink. Okay, I'm in. Let's support each other in there.",
+                emotion: "😊 Sarah smiles - Alliance formed!",
+                setEmotion: { sarah: "😊" },
+                next: 6
+            },
+
+            // Scene 5: Sarah stays neutral
+            {
+                speaker: "sarah",
+                text: "Okay... well, good luck in there. May the best idea win.",
+                emotion: "😐 Sarah stays professional but distant",
+                setEmotion: { sarah: "😐" },
+                next: 6
+            },
+
+            // Scene 6: Meeting begins - Roger's opening
+            {
+                speaker: "roger",
+                text: "Alright everyone, let's get started. You all know why we're here. Snapple's Q3 profits are down 70%. Shareholders are calling for heads to roll. I need bold solutions. Each of you will present your strategy. Alex, you're first.",
+                emotion: "😠 Roger is clearly under pressure",
+                setEmotion: { roger: "😠" },
+                next: 7
+            },
+
+            // Scene 7: Your opening pitch
+            {
+                speaker: "alex",
+                text: "Thank you, Roger. My proposal is to launch Snapple Sports Drink. The sports drink market is exploding—Gatorade dominates, but there's room for a premium, all-natural alternative. We can leverage Snapple's 'healthy beverage' brand.",
+                emotion: "You deliver your pitch confidently",
+                setEmotion: { alex: "😎", david: "🤨", tom: "🤔", maria: "🤔" },
+                next: 8
+            },
+
+            // Scene 8: Roger's cost question
+            {
+                speaker: "roger",
+                text: "Interesting. How much will this cost us?",
+                emotion: "Roger leans forward, listening intently",
+                setEmotion: { roger: "🤔" },
+                choices: [
+                    {
+                        label: "A) 💰 Be honest about investment",
+                        text: "We'll need significant investment upfront, but the long-term ROI is substantial.",
+                        description: "Honest but risky - David won\'t like this",
+                        next: 9,
+                        effects: { credibility: 10, politicalSavvy: -5 },
+                        setEmotions: { david: "😠", roger: "🤔" }
+                    },
+                    {
+                        label: "B) 🎯 Conservative approach",
+                        text: "I can launch a limited pilot with existing budget. Test the market first.",
+                        description: "Safe but less ambitious",
+                        next: 10,
+                        effects: { credibility: 5, politicalSavvy: 5 },
+                        setEmotions: { david: "😐", roger: "😐" }
+                    },
+                    {
+                        label: "C) 🤝 Defer to Finance",
+                        text: "Let me hear David's thoughts on budget first. I want this to be a team decision.",
+                        description: "Build relationship with Finance VP",
+                        next: 11,
+                        effects: { credibility: 5, politicalSavvy: 10 },
+                        setEmotions: { david: "😊" }
+                    },
+                    {
+                        label: "D) ⚔️ Attack competitor's idea",
+                        text: "Whatever it costs, it's better than Maria's 'race to the bottom' price cuts.",
+                        description: "Aggressive - make an enemy",
+                        next: 12,
+                        effects: { credibility: -10, politicalSavvy: -10 },
+                        setEmotions: { maria: "😡", roger: "😠" }
+                    }
+                ]
+            },
+
+            // Scene 9: Honest investment path
+            {
+                speaker: "narrator",
+                text: "David shifts in his seat uncomfortably. You can see he's preparing to object. Tom nods thoughtfully—he seems to appreciate your honesty.",
+                emotion: "",
+                setEmotion: { tom: "😊" },
+                next: 13
+            },
+
+            // Scene 10: Conservative path
+            {
+                speaker: "narrator",
+                text: "Roger nods slowly. David looks slightly appeased. It's not exciting, but it's safe. Tom seems unimpressed with the cautious approach.",
+                emotion: "",
+                setEmotion: { tom: "😐" },
+                next: 13
+            },
+
+            // Scene 11: Defer to David path
+            {
+                speaker: "david",
+                text: "I appreciate that, Alex. Look, I'm not against innovation. I just need to see the numbers make sense. If we can structure this smartly, I'm open to discussing it.",
+                emotion: "😊 David seems pleasantly surprised by your respect",
+                setEmotion: { david: "😊" },
+                effects: { credibility: 5 },
+                addAlly: "david",
+                next: 13
+            },
+
+            // Scene 12: Attack Maria path (BAD CHOICE)
+            {
+                speaker: "maria",
+                text: "Excuse me? My pricing strategy is based on market data. At least I'm not asking us to gamble on an unproven product category!",
+                emotion: "😡 Maria is furious. The room feels tense.",
+                setEmotion: { maria: "😡", roger: "😠", sarah: "😰", tom: "😐", david: "😠" },
+                effects: { credibility: -10 },
+                next: 13
+            },
+
+            // Scene 13: David's objection
+            {
+                speaker: "david",
+                text: "Roger, with all due respect to Alex, we need to cut costs, not add new product lines. Alex's plan is too risky. We're hemorrhaging money and this could make it worse.",
+                emotion: "😠 David is challenging you directly",
+                setEmotion: { david: "😠" },
+                choices: [
+                    {
+                        label: "A) 🤝 Find common ground",
+                        text: "David, you're right about costs. What if we can prove ROI within 6 months?",
+                        description: "Seek compromise - bridge the gap",
+                        next: 14,
+                        effects: { credibility: 10, politicalSavvy: 15 },
+                        setEmotions: { david: "🤔" }
+                    },
+                    {
+                        label: "B) ⚔️ Direct confrontation",
+                        text: "Cutting costs will destroy Snapple's premium brand. We need growth, not shrinkage.",
+                        description: "Stand your ground - make David an enemy",
+                        next: 15,
+                        effects: { credibility: 5, politicalSavvy: -10 },
+                        setEmotions: { david: "😡", roger: "😐" }
+                    },
+                    {
+                        label: "C) 🎯 Rally Tom (Production)",
+                        text: "Tom, from a production standpoint, can we do this efficiently?",
+                        description: "Pull in an ally",
+                        next: 16,
+                        effects: { credibility: 5, politicalSavvy: 10 },
+                        addAlly: "tom"
+                    },
+                    {
+                        label: "D) 💡 Combine strategies",
+                        text: "What if we merge my Sports Drink with David's cost controls? Lean startup approach.",
+                        description: "Offer a trade - show flexibility",
+                        next: 17,
+                        effects: { credibility: 15, politicalSavvy: 15 },
+                        addAlly: "david"
+                    }
+                ]
+            },
+
+            // Scene 14: Common ground with David
+            {
+                speaker: "david",
+                text: "Six months... That's tight, but if you can build in clear milestones and kill-switches, I could support a pilot program.",
+                emotion: "🤔 David is considering your proposal",
+                setEmotion: { david: "🤔", roger: "😊" },
+                effects: { credibility: 10 },
+                addAlly: "david",
+                next: 18
+            },
+
+            // Scene 15: Confrontation with David (BAD)
+            {
+                speaker: "david",
+                text: "You're asking us to bet the company on your gut feeling. That's not leadership, that's recklessness.",
+                emotion: "😡 David is now openly hostile. Roger looks disappointed.",
+                setEmotion: { david: "😡", roger: "😠" },
+                effects: { credibility: -15 },
+                next: 18
+            },
+
+            // Scene 16: Rally Tom
+            {
+                speaker: "tom",
+                text: "Actually, David, I think Alex is onto something. We have idle capacity right now. We could produce a sports drink without major capital investment. It's about smart formulation.",
+                emotion: "😊 Tom backs you up! David looks surprised.",
+                setEmotion: { tom: "😊", david: "🤔", roger: "🤔" },
+                effects: { credibility: 10 },
+                addAlly: "tom",
+                next: 18
+            },
+
+            // Scene 17: Merge strategies
+            {
+                speaker: "narrator",
+                text: "David pauses. You can see the gears turning. Roger leans forward—this kind of collaborative thinking is exactly what he wants to see.",
+                emotion: "",
+                setEmotion: { david: "🤔", roger: "😊" },
+                effects: { credibility: 15 },
+                addAlly: "david",
+                next: 18
+            },
+
+            // Scene 18: Sarah's counter-proposal
+            {
+                speaker: "sarah",
+                text: "I appreciate Alex's vision, but I have a different approach. Instead of a new product, we should use celebrity athlete endorsements for our existing iced teas. Cheaper, faster, less risky.",
+                emotion: "😐 Sarah is presenting an alternative - indirectly competing with you",
+                setEmotion: { sarah: "😐" },
+                next: 19
+            },
+
+            // Scene 19: Sarah continues
+            {
+                speaker: "sarah",
+                text: "Plus, Alex's sports drink would compete with our own tea products. We'd be cannibalizing our brand.",
+                emotion: "🤔 Sarah makes a strategic point",
+                setEmotion: { sarah: "🤔", roger: "🤔" },
+                next: 20
+            },
+
+            // Scene 20: Roger asks for your response
+            {
+                speaker: "roger",
+                text: "That's a valid concern, Sarah. Alex, how do you respond?",
+                emotion: "🤔 Roger is testing your strategic thinking",
+                setEmotion: { roger: "🤔" },
+                choices: [
+                    {
+                        label: "A) 🤝 Propose collaboration",
+                        text: "Sarah, what if we combine both? Sports Drink + your athlete endorsements?",
+                        description: "Build alliance - inclusive leadership",
+                        next: 21,
+                        effects: { credibility: 15, politicalSavvy: 10 },
+                        addAlly: "sarah"
+                    },
+                    {
+                        label: "B) 📊 Rational explanation",
+                        text: "Different products target different markets. Sports drinks are consumed during exercise; teas are for relaxation.",
+                        description: "Logic-based defense",
+                        next: 22,
+                        effects: { credibility: 10, politicalSavvy: 5 }
+                    },
+                    {
+                        label: "C) 🗳️ Force a vote",
+                        text: "Let's vote on it. We can't analyze forever - we need to decide.",
+                        description: "Aggressive move - risky",
+                        next: 23,
+                        effects: { credibility: 0, politicalSavvy: -10 },
+                        setEmotions: { roger: "😠" }
+                    },
+                    {
+                        label: "D) ⏸️ Suggest market research",
+                        text: "Let's do customer research first, then decide. Data should drive this.",
+                        description: "Cautious - buy time",
+                        next: 24,
+                        effects: { credibility: 5, politicalSavvy: 0 }
+                    }
+                ]
+            },
+
+            // Scene 21: Collaboration with Sarah
+            {
+                speaker: "sarah",
+                text: "You know what? That could actually work. Athlete endorsements would be perfect for a sports drink. Alex, I'm in.",
+                emotion: "😊 Sarah smiles - you've turned a competitor into an ally!",
+                setEmotion: { sarah: "😊", roger: "😊" },
+                effects: { credibility: 15 },
+                addAlly: "sarah",
+                next: 25
+            },
+
+            // Scene 22: Rational explanation
+            {
+                speaker: "narrator",
+                text: "Sarah nods reluctantly. Your logic is sound. Roger seems satisfied with the answer, but you haven't gained her support.",
+                emotion: "",
+                setEmotion: { sarah: "😐", roger: "😊" },
+                next: 25
+            },
+
+            // Scene 23: Force vote (BAD)
+            {
+                speaker: "roger",
+                text: "Alex, this isn\'t about voting. This is about building consensus and making smart decisions. I'm disappointed in that approach.",
+                emotion: "😠 Roger is not pleased with your impatience",
+                setEmotion: { roger: "😠", sarah: "😐", david: "😠", tom: "😐", maria: "😐" },
+                effects: { credibility: -15 },
+                next: 25
+            },
+
+            // Scene 24: Market research delay
+            {
+                speaker: "roger",
+                text: "We don't have time for more research. We need to act now. I need leaders who can make decisions, not delay them.",
+                emotion: "😐 Roger is frustrated with the delay tactic",
+                setEmotion: { roger: "😐" },
+                effects: { credibility: -5 },
+                next: 25
+            },
+
+            // Scene 25: Meeting break
+            {
+                speaker: "narrator",
+                text: "Roger calls for a 15-minute break. This is your chance to work the room privately. You can approach ONE person for a crucial one-on-one conversation.",
+                emotion: "",
+                next: 26
+            },
+
+            // Scene 26: Choose who to approach
+            {
+                speaker: "narrator",
+                text: "Who do you want to talk to during the break? Choose wisely - this could determine your fate.",
+                emotion: "",
+                choices: [
+                    {
+                        label: "A) 💰 David (VP Finance)",
+                        text: "Approach David: 'I'll support your cost cuts if you support my pilot.'",
+                        description: "Trade support - political deal",
+                        next: 27,
+                        effects: { politicalSavvy: 15 }
+                    },
+                    {
+                        label: "B) 🎯 Maria (VP Sales)",
+                        text: "Approach Maria: 'If Sports Drink succeeds, your sales numbers will skyrocket.'",
+                        description: "Appeal to her self-interest",
+                        next: 28,
+                        effects: { politicalSavvy: 10 }
+                    },
+                    {
+                        label: "C) 🏭 Tom (VP Production)",
+                        text: "Approach Tom: 'I'll use existing capacity—no burden on Production.'",
+                        description: "Remove his concerns",
+                        next: 29,
+                        effects: { politicalSavvy: 10 }
+                    },
+                    {
+                        label: "D) 👔 Roger (CEO)",
+                        text: "Approach Roger directly: 'Let me show you why this is the future.'",
+                        description: "Bold move - go straight to the top",
+                        next: 30,
+                        effects: { credibility: 10, politicalSavvy: 5 }
+                    }
+                ]
+            },
+
+            // Scene 27: David conversation
+            {
+                speaker: "david",
+                text: "You're learning how this works. Alright, I'll back your pilot if you publicly support my cost-cutting measures for other departments.",
+                emotion: "😊 David respects your political savvy",
+                setEmotion: { david: "😊" },
+                effects: { credibility: 10, politicalSavvy: 15 },
+                addAlly: "david",
+                next: 31
+            },
+
+            // Scene 28: Maria conversation
+            {
+                speaker: "maria",
+                text: "Hmm. You've got a point. I was skeptical, but if this gives me a new product to sell... Fine. I'll support you.",
+                emotion: "😊 Maria sees the opportunity",
+                setEmotion: { maria: "😊" },
+                effects: { credibility: 10, politicalSavvy: 10 },
+                addAlly: "maria",
+                next: 31
+            },
+
+            // Scene 29: Tom conversation
+            {
+                speaker: "tom",
+                text: "I appreciate that. Production is always blamed for delays. If you're really not adding to my workload, I'll back you up in there.",
+                emotion: "😊 Tom is relieved",
+                setEmotion: { tom: "😊" },
+                effects: { credibility: 10, politicalSavvy: 10 },
+                addAlly: "tom",
+                next: 31
+            },
+
+            // Scene 30: Roger conversation
+            {
+                speaker: "roger",
+                text: "I like your confidence, Alex. But I'm watching how you work with the team. Leadership isn\'t about having the best idea—it\'s about getting everyone aligned. Show me that.",
+                emotion: "🤔 Roger is testing you",
+                setEmotion: { roger: "🤔" },
+                effects: { credibility: 10 },
+                next: 31
+            },
+
+            // Scene 31: Final meeting - Roger's decision moment
+            {
+                speaker: "narrator",
+                text: "Everyone returns to the boardroom. Roger stands up, ready to make his decision.",
+                emotion: "",
+                next: 32
+            },
+
+            // Scene 32: Roger's final test
+            {
+                speaker: "roger",
+                text: "I've heard everyone's proposals. Alex, I'm leaning toward giving you a shot at this Sports Drink project. But I have one final question: If I give you full authority, how will you structure your team?",
+                emotion: "🤔 This is a leadership test!",
+                setEmotion: { roger: "🤔" },
+                next: 33
+            },
+
+            // Scene 33: Final leadership question
+            {
+                speaker: "narrator",
+                text: "This is it—your answer will determine the ending. How you respond will show Roger what kind of leader you are.",
+                emotion: "",
+                choices: [
+                    {
+                        label: "A) 🤝 Inclusive leadership",
+                        text: "I'll involve every VP. Each brings unique expertise—David on budget, Sarah on marketing, Tom on production.",
+                        description: "Collaborative approach - 'We' over 'I'",
+                        next: "ENDING",
+                        endingType: "calculate"
+                    },
+                    {
+                        label: "B) 🎯 Goal-oriented",
+                        text: "I'll pick the people most committed to this vision. Alignment is key.",
+                        description: "Results-focused - vision-driven",
+                        next: "ENDING",
+                        endingType: "calculate"
+                    },
+                    {
+                        label: "C) 📋 Detailed plan",
+                        text: "David manages budget, Sarah handles marketing, Tom owns production. Clear roles, clear accountability.",
+                        description: "Structured approach - process-driven",
+                        next: "ENDING",
+                        endingType: "calculate"
+                    },
+                    {
+                        label: "D) 👂 Participative leadership",
+                        text: "I'll ask the team first. Psychological safety means everyone has input on structure.",
+                        description: "Democratic approach - team-first",
+                        next: "ENDING",
+                        endingType: "calculate"
+                    }
+                ]
+            }
+        ];
+
+        // ========== ENDINGS ==========
+        const endings = {
+            fired: {
+                title: "🔥 ENDING A: You're Fired",
+                content: `
+                    <p>One week later, you receive an email from HR.</p>
+                    <p style="margin-top: 15px; color: #e74c3c;"><strong>"Dear Alex, As part of a restructuring initiative, your position has been eliminated. Your last day will be Friday."</strong></p>
+                    <p style="margin-top: 15px;">Your project is cancelled. You're the casualty of boardroom politics. Roger decided you lacked the political savvy and relationship-building skills needed for executive leadership.</p>
+                `,
+                whatHappenedNext: `
+                    <h3 style="color: #e74c3c; margin-bottom: 15px;">📰 What Happened Next</h3>
+                    <p>Six months later, Snapple's decline continued. Without a clear innovation strategy, the company lost another 15% market share. Roger was eventually replaced by Quaker's board. Your successor lasted only three months before also being fired.</p>
+                    <p style="margin-top: 15px;">You landed at a smaller beverage startup where your ideas were welcomed—but you never forgot the lesson: great ideas without political capital are just dreams.</p>
+                `,
+                leadershipTips: [
+                    {
+                        icon: "🤝",
+                        tip: "Power comes from networks, not authority",
+                        course: "As Linda Hill taught: 'Management is not about formal authority—it\'s about navigating interdependencies.' You can\'t lead if you can\'t influence."
+                    },
+                    {
+                        icon: "💱",
+                        tip: "Find currencies others value",
+                        course: "Cohen & Bradford\'s \'currencies of exchange': David needed cost control, Sarah needed visibility. You didn\'t identify what to trade."
+                    },
+                    {
+                        icon: "👥",
+                        tip: "Build coalitions before you need them",
+                        course: "Caroline Regis lesson: She had expertise but lacked political capital post-merger. Build relationships early, not when you\'re desperate."
+                    }
+                ],
+                courseConnection: `
+                    <h4>📚 Why You Failed</h4>
+                    <p><strong>You violated the core principle:</strong> "We" must be greater than "I." You fought alone. In organizations, individual brilliance without collective support leads to process losses—exactly what happened here.</p>
+                `
+            },
+            sidelined: {
+                title: "😐 ENDING B: Sidelined",
+                content: `
+                    <p>Roger approves a limited pilot of your Sports Drink project. But there's a catch.</p>
+                    <p style="margin-top: 15px; color: #f39c12;"><strong>"Sarah will oversee the project. Alex, you'll report to her."</strong></p>
+                    <p style="margin-top: 15px;">You're still employed, but your influence has been diminished. You get to work on your idea, but you're not leading it. You built some relationships, but not enough to be trusted with full authority.</p>
+                `,
+                whatHappenedNext: `
+                    <h3 style="color: #f39c12; margin-bottom: 15px;">📰 What Happened Next</h3>
+                    <p>The Sports Drink pilot showed mixed results. Sales were decent, but the product never got the full executive commitment needed to scale. Sarah took credit for the wins; you got blamed for the challenges.</p>
+                    <p style="margin-top: 15px;">A year later, you're still VP of Innovation, but everyone knows you're not in the inner circle. You learned a valuable lesson: partial political capital leads to partial success.</p>
+                `,
+                leadershipTips: [
+                    {
+                        icon: "🎯",
+                        tip: "Psychological safety requires full commitment",
+                        course: "Google's Project Aristotle: Teams succeed when everyone feels heard. You created some safety, but not enough. Half-measures don\'t work."
+                    },
+                    {
+                        icon: "⚖️",
+                        tip: "Strategic compromises beat perfectionism",
+                        course: "Snapple exercise insight: Power = finding partners who share your vision AND making trade-offs. You compromised sometimes, but not strategically enough."
+                    },
+                    {
+                        icon: "🔊",
+                        tip: "Equal voice isn't just being nice—it's strategic",
+                        course: "Conversational turn-taking (Project Aristotle) isn\'t about politeness—it surfaces blind spots. You listened, but not enough to unlock collective intelligence."
+                    }
+                ],
+                courseConnection: `
+                    <h4>📚 What You Missed</h4>
+                    <p><strong>You understood the game but didn't master it.</strong> You created some process gains through coordination, but also allowed process losses through incomplete buy-in. Result: mediocre performance.</p>
+                `
+            },
+            projectLead: {
+                title: "🎉 ENDING C: Project Lead - You Did It!",
+                content: `
+                    <p style="color: #2ecc71; font-size: 1.3em;"><strong>Roger smiles and extends his hand.</strong></p>
+                    <p style="margin-top: 15px;">"Alex, I'm approving the Snapple Sports Drink project. You'll have full authority as Project Lead. David will manage budget, Sarah will handle marketing, and Tom will oversee production."</p>
+                    <p style="margin-top: 15px;"><strong>You did it.</strong> You navigated boardroom politics, built cross-functional alliances, and demonstrated strategic leadership. Your project is greenlit, and you're leading it.</p>
+                `,
+                whatHappenedNext: `
+                    <h3 style="color: #2ecc71; margin-bottom: 15px;">📰 What Happened Next</h3>
+                    <p>The Snapple Sports Drink launched 9 months later to strong reviews. Sales exceeded projections by 25% in the first quarter. Your collaborative approach meant every VP felt invested in the success—David kept costs under control, Sarah's marketing was brilliant, and Tom's production was flawless.</p>
+                    <p style="margin-top: 15px;">Roger publicly credited "Alex's leadership in building a unified executive team." You proved that influence beats authority every time.</p>
+                `,
+                leadershipTips: [
+                    {
+                        icon: "🔄",
+                        tip: "Reciprocity creates sustainable influence",
+                        course: "Linda Hill\'s \'law of reciprocity': You gave David cost controls, Sarah marketing integration, Tom production efficiency. They gave you loyalty. That's how influence works."
+                    },
+                    {
+                        icon: "🎭",
+                        tip: "Shared vision beats individual genius",
+                        course: "Team Process formula: You maximized process GAINS (coordination, motivation) and minimized LOSSES (conflict, social loafing). Actual performance exceeded potential."
+                    },
+                    {
+                        icon: "🛡️",
+                        tip: "Psychological safety unlocks performance",
+                        course: "Google's key finding: When people feel safe to contribute, teams achieve more. You created that environment—David felt heard, Sarah felt valued, Tom felt respected."
+                    }
+                ],
+                courseConnection: `
+                    <h4>📚 What You Did Right</h4>
+                    <p><strong>You proved "We" > "I".</strong> Your success came from building networks (Linda Hill), finding currencies to trade (Cohen & Bradford), and creating psychological safety (Project Aristotle). This is leadership.</p>
+                `
+            },
+            promoted: {
+                title: "🚀 ENDING D: Promoted to COO - Leadership Mastered!",
+                content: `
+                    <p style="color: #f1c40f; font-size: 1.5em;"><strong>Three months later...</strong></p>
+                    <p style="margin-top: 15px;">The Snapple Sports Drink pilot is a massive success. Sales exceeded projections by 40%. Roger calls you into his office.</p>
+                    <p style="margin-top: 15px; color: #2ecc71;"><strong>"Alex, I need someone who can unite this entire leadership team. Someone who understands both vision AND politics. I'm promoting you to Chief Operating Officer."</strong></p>
+                    <p style="margin-top: 15px;">You didn\'t just survive boardroom politics—<strong>you mastered it.</strong></p>
+                    <p style="margin-top: 15px;">You've demonstrated the most critical leadership skill: the ability to create shared goals, build coalitions, and turn competing interests into collaborative success.</p>
+                `,
+                whatHappenedNext: `
+                    <h3 style="color: #f1c40f; margin-bottom: 15px;">📰 What Happened Next</h3>
+                    <p>As COO, you transformed Snapple's entire culture. The executive team that was once fractured and competitive became collaborative and aligned. David, Sarah, Maria, and Tom all became your strongest advocates.</p>
+                    <p style="margin-top: 15px;">Two years later, Snapple's market share rebounded by 35%. The board credited your leadership with "saving the Quaker acquisition." You were featured in Harvard Business Review's "40 Under 40" list.</p>
+                    <p style="margin-top: 15px; color: #2ecc71;"><strong>More importantly: You became the kind of leader people want to follow.</strong></p>
+                `,
+                leadershipTips: [
+                    {
+                        icon: "🧩",
+                        tip: "Great leaders make others better",
+                        course: "You didn\'t just succeed—you made David feel like a strategic partner, Sarah feel like a creative force, and Tom feel like an operational genius. THAT\'S leadership."
+                    },
+                    {
+                        icon: "🎯",
+                        tip: "Politics isn't dirty—it's how work gets done",
+                        course: "Linda Hill: 'Managers must find ways to acquire power and exercise influence.' You mastered this. You identified currencies, built networks, and created coalitions strategically."
+                    },
+                    {
+                        icon: "💎",
+                        tip: "Process gains compound exponentially",
+                        course: "Team Process: When you eliminate motivation/coordination losses AND add effective collaboration, actual performance far exceeds potential. You proved this—40% above projections."
+                    }
+                ],
+                courseConnection: `
+                    <h4>📚 Leadership Mastery</h4>
+                    <p><strong>You internalized every principle:</strong></p>
+                    <p style="margin-top: 10px;">✅ <strong>Power through networks</strong> (Linda Hill) - You built coalitions before you needed them</p>
+                    <p>✅ <strong>Psychological safety</strong> (Project Aristotle) - Everyone felt heard, which unlocked collective intelligence</p>
+                    <p>✅ <strong>"We" over "I"</strong> (Team Process) - You maximized process gains and minimized losses</p>
+                    <p>✅ <strong>Strategic currencies</strong> (Cohen & Bradford) - You identified what others valued and traded effectively</p>
+                    <p>✅ <strong>Early coalition building</strong> (Caroline Regis lesson) - Unlike Regis, you built political capital from day one</p>
+                    <p style="margin-top: 15px; color: #f1c40f;"><strong>This is what it means to lead.</strong></p>
+                `
+            }
+        };
+
+        // ========== GAME FUNCTIONS ==========
+        
+        function startGame() {
+            document.getElementById('title-screen').classList.add('hidden');
+            document.getElementById('meet-players-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('score-bar').style.display = 'block';
+            document.getElementById('dialogue-box').style.display = 'block';
+            document.getElementById('characters').style.display = 'flex';
+            document.getElementById('choices').style.display = 'block';
+            
+            showScene(0);
+        }
+
+        function showScene(sceneIndex) {
+            const scene = scenes[sceneIndex];
+            gameState.currentScene = sceneIndex;
+            
+            // Update dialogue box
+            const dialogueBox = document.getElementById('dialogue-box');
+            const speakerName = document.getElementById('speaker-name');
+            const dialogueText = document.getElementById('dialogue-text');
+            const dialogueEmotion = document.getElementById('dialogue-emotion');
+            
+            if (scene.speaker === "narrator") {
+                speakerName.textContent = "📖 Narrator";
+                speakerName.style.color = "#95a5a6";
+            } else if (scene.speaker === "alex") {
+                speakerName.textContent = "💡 You (Alex)";
+                speakerName.style.color = "#3498db";
+            } else {
+                const char = characters[scene.speaker];
+                speakerName.textContent = `${char.icon} ${char.name}`;
+                speakerName.style.color = getCharacterColor(scene.speaker);
+            }
+            
+            dialogueText.textContent = scene.text;
+            dialogueEmotion.textContent = scene.emotion || "";
+            
+            // Update character emotions
+            if (scene.setEmotion) {
+                Object.keys(scene.setEmotion).forEach(char => {
+                    gameState.characterEmotions[char] = scene.setEmotion[char];
+                    updateCharacterEmotion(char);
+                });
+            }
+            
+            // Highlight speaking character
+            document.querySelectorAll('.character').forEach(char => {
+                char.classList.remove('speaking');
+            });
+            if (scene.speaker !== "narrator") {
+                const speakingChar = document.querySelector(`.character.${scene.speaker}`);
+                if (speakingChar) {
+                    speakingChar.classList.add('speaking');
+                }
+            }
+            
+            // Show choices or continue button
+            const choicesDiv = document.getElementById('choices');
+            const continueBtn = document.getElementById('continue-button');
+            
+            if (scene.choices && scene.choices.length > 0) {
+                choicesDiv.innerHTML = '';
+                scene.choices.forEach((choice, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'choice-button';
+                    button.type = 'button'; // Prevent form submission
+                    button.innerHTML = `
+                        <span class="choice-label">${choice.label}</span>
+                        <div>${choice.text}</div>
+                        <div class="choice-description">${choice.description}</div>
+                    `;
+                    button.onclick = (e) => {
+                        e.preventDefault(); // Prevent any default behavior
+                        e.stopPropagation(); // Stop event bubbling
+                        makeChoice(choice);
+                    };
+                    choicesDiv.appendChild(button);
+                });
+                continueBtn.style.display = 'none';
+            } else if (scene.next === "ENDING") {
+                // This shouldn't happen as choices lead to ending
+                showEnding();
+            } else if (scene.next !== undefined) {
+                choicesDiv.innerHTML = '';
+                continueBtn.style.display = 'block';
+            } else {
+                // End of story without choices
+                choicesDiv.innerHTML = '';
+                continueBtn.style.display = 'none';
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function makeChoice(choice) {
+            console.log("makeChoice called with:", choice);
+            console.log("choice.next =", choice.next);
+            
+            // Apply effects
+            if (choice.effects) {
+                if (choice.effects.credibility) {
+                    gameState.credibility = Math.max(0, Math.min(100, gameState.credibility + choice.effects.credibility));
+                }
+                if (choice.effects.politicalSavvy) {
+                    gameState.politicalSavvy = Math.max(0, Math.min(100, gameState.politicalSavvy + choice.effects.politicalSavvy));
+                }
+            }
+            
+            // Add allies
+            if (choice.addAlly && !gameState.allies.includes(choice.addAlly)) {
+                gameState.allies.push(choice.addAlly);
+            }
+            
+            // Set emotions
+            if (choice.setEmotions) {
+                Object.keys(choice.setEmotions).forEach(char => {
+                    gameState.characterEmotions[char] = choice.setEmotions[char];
+                    updateCharacterEmotion(char);
+                });
+            }
+            
+            // Update UI
+            updateScores();
+            
+            // Save choice
+            gameState.choices[gameState.currentScene] = choice.label;
+            
+            // Navigate
+            console.log("Checking navigation...");
+            if (choice.next === "ENDING") {
+                console.log("Calling showEnding()!");
+                showEnding();
+            } else {
+                console.log("Calling showScene:", choice.next);
+                showScene(choice.next);
+            }
+        }
+
+        function continueStory() {
+            const scene = scenes[gameState.currentScene];
+            if (scene.next !== undefined && scene.next !== "ENDING") {
+                showScene(scene.next);
+            }
+        }
+
+        function updateScores() {
+            // Update credibility
+            document.getElementById('credibility-bar').style.width = gameState.credibility + '%';
+            document.getElementById('credibility-value').textContent = gameState.credibility + '/100';
+            
+            // Update political savvy
+            document.getElementById('savvy-bar').style.width = gameState.politicalSavvy + '%';
+            document.getElementById('savvy-value').textContent = gameState.politicalSavvy + '/100';
+            
+            // Update allies
+            const alliesList = document.getElementById('allies-list');
+            if (gameState.allies.length === 0) {
+                alliesList.textContent = "None yet";
+                alliesList.style.color = "#95a5a6";
+            } else {
+                const allyNames = gameState.allies.map(ally => characters[ally].name);
+                alliesList.textContent = allyNames.join(', ');
+                alliesList.style.color = "#2ecc71";
+            }
+        }
+
+        function updateCharacterEmotion(charName) {
+            const emotionDiv = document.getElementById(charName + '-emotion');
+            if (emotionDiv) {
+                emotionDiv.textContent = gameState.characterEmotions[charName];
+            }
+        }
+
+        function getCharacterColor(charName) {
+            const colors = {
+                alex: '#3498db',
+                david: '#27ae60',
+                sarah: '#e74c3c',
+                maria: '#f39c12',
+                tom: '#95a5a6',
+                roger: '#f1c40f'
+            };
+            return colors[charName] || '#ffffff';
+        }
+
+        function showEnding() {
+            console.log("=== SHOWENDING CALLED ===");
+            console.log("Current gameState:", gameState);
+            
+            // Calculate ending based on scores and allies
+            let endingType;
+            
+            const allyCount = gameState.allies.length;
+            const avgScore = (gameState.credibility + gameState.politicalSavvy) / 2;
+            
+            console.log("allyCount:", allyCount);
+            console.log("avgScore:", avgScore);
+            
+            if (avgScore >= 80 && allyCount >= 4) {
+                endingType = 'promoted';
+            } else if (avgScore >= 55 && allyCount >= 2) {
+                endingType = 'projectLead';
+            } else if (avgScore >= 35 || allyCount >= 1) {
+                endingType = 'sidelined';
+            } else {
+                endingType = 'fired';
+            }
+            
+            console.log("Ending type:", endingType);
+            
+            const ending = endings[endingType];
+            console.log("Ending object:", ending);
+            
+            // Hide game screen
+            document.getElementById('game-screen').classList.add('hidden');
+            
+            // Show ending screen
+            const endingScreen = document.getElementById('ending-screen');
+            endingScreen.classList.remove('hidden');
+            endingScreen.style.display = 'block';
+            
+            console.log("Setting ending content...");
+            
+            document.getElementById('ending-title').innerHTML = ending.title;
+            document.getElementById('ending-content').innerHTML = ending.content;
+            
+            // Show "What Happened Next"
+            document.getElementById('what-happened-next').innerHTML = ending.whatHappenedNext;
+            
+            // Show Leadership Tips
+            const tipsHTML = `
+                <h3>💡 3 Leadership Lessons</h3>
+                ${ending.leadershipTips.map(tip => `
+                    <div class="leadership-tip">
+                        <div class="leadership-tip-header">
+                            <span class="leadership-tip-icon">${tip.icon}</span>
+                            <span class="leadership-tip-title">${tip.tip}</span>
+                        </div>
+                        <div class="leadership-tip-course">${tip.course}</div>
+                    </div>
+                `).join('')}
+            `;
+            document.getElementById('leadership-tips').innerHTML = tipsHTML;
+            
+            document.getElementById('course-connection').innerHTML = ending.courseConnection;
+            
+            // Show final scores
+            const finalScoresDiv = document.getElementById('final-scores');
+            const allyNames = gameState.allies.length > 0 
+                ? gameState.allies.map(a => characters[a].name).join(', ')
+                : 'None';
+            
+            finalScoresDiv.innerHTML = `
+                <h3>📊 Your Final Scores</h3>
+                <p style="margin-top: 10px;"><strong>Credibility:</strong> ${gameState.credibility}/100</p>
+                <p><strong>Political Savvy:</strong> ${gameState.politicalSavvy}/100</p>
+                <p><strong>Allies:</strong> ${allyNames}</p>
+            `;
+            
+            console.log("=== ENDING SCREEN SHOULD NOW BE VISIBLE ===");
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize emotions
+        Object.keys(gameState.characterEmotions).forEach(char => {
+            updateCharacterEmotion(char);
+        });
+        
+    </script>
+</body>
+</html>
